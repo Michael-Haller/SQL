@@ -12,5 +12,6 @@ SELECT * FROM orders;
 show databases;
 
 /*Drop a database
+DROP DATABASE dog_store_db;
 
 
