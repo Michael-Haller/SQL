@@ -1,17 +1,42 @@
 /* Beginner Code
-/* Select everything from our order database
-SELECT * FROM orders;
+    /* Select everything from our order database
+    SELECT * FROM orders;
 
-  /*Creating MySQL Database Server for our Dog Store App
-  Create Database dog_store_db;
+    /*Creating MySQL Database Server for our Dog Store App
+    Create Database dog_store_db;
 
-  /* Creating Database
-  CREATE DATABASE dog_store_db;
+    /* Creating Database
+    CREATE DATABASE dog_store_db;
 
-/* Show your database
-show databases;
+    /* Show your database
+    show databases;
 
-/*Drop a database
-DROP DATABASE dog_store_db;
+    /*Drop a database
+    DROP DATABASE dog_store_db;
 
+    /* Ways to use Databases
+    USE dog_store_db;
+    SELECT database();
 
+/* Creating or Deleting Tables
+  /* Create a table called Dog Shop and have dog name and age
+  /* Make sure to create a database first
+     CREATE DATABASE dog_store 
+     CREATE TABLE dog_shop
+     (
+          dog_name VARCHAR(10),
+          dog_age INT,
+     );     
+     
+  /* Want to see if this worked?
+  SHOW TABLES;
+  
+  SHOW COLUMNS FROM dog_shop;
+  /* OR
+  DESC dog_shop;
+  
+  /* How about deleting
+  DROP TABLE dog_shop
+  
+  
+ 
