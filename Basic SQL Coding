@@ -1,0 +1,16 @@
+/* Beginner Code
+/* Select everything from our order database
+SELECT * FROM orders;
+
+  /*Creating MySQL Database Server for our Dog Store App
+  Create Database dog_store_db;
+
+  /* Creating Database
+  CREATE DATABASE dog_store_db;
+
+/* Show your database
+show databases;
+
+/*Drop a database
+
+
