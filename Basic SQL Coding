@@ -28,15 +28,50 @@
           dog_age INT,
      );     
      
-  /* Want to see if this worked?
-  SHOW TABLES;
+     /* Want to see if this worked?
+    SHOW TABLES;
+    SHOW COLUMNS FROM dog_shop;
+     /* OR
+     DESC dog_shop;
   
-  SHOW COLUMNS FROM dog_shop;
-  /* OR
-  DESC dog_shop;
-  
-  /* How about deleting
-  DROP TABLE dog_shop
-  
-  
- 
+    /* How about deleting
+     DROP TABLE dog_shop
+     
+  /* Adding Data to the Table
+    INSERT INTO dog_shop (name, age) VALUES ('Mike', 9), ('Marley', 1);
+    
+    /* Confirming this worked
+    Select * FROM dog_shop
+    
+    /* Null versus Not Null. Null does not equal zero.
+    CREATE TABLE dog_shop2 (
+    name VARCHAR(100) NOT NULL,
+    age INT NOT NULL);
+    
+    /*Creating a default value
+    CREATE TABLE dog_shop3
+    (name VARCHAR(100) DEFAULT 'no name provided',
+    age INT DEFAULT 99);
+    
+    /* Other Option
+    CREATE TABLE dog_shop4
+    (name VARCHAR(100) NOT NULL DEFAULT 'no name provided',
+    age INT NOT NULL DEFAULT 99);
+    
+    /* Primary keys how to differentiate when there are two of the same names and ages in a group
+    CREATE TABLE unique_dogs
+    (dog_id INT NOT NULL,
+    name VARCHAR(100),
+    age INT,
+    PRIMARY KEY (dog_id));
+    
+    /* When making it auto increment
+     CREATE TABLE unique_dogs2
+  (dog_id INT NOT NULL AUTO_INCRMENT,
+    name VARCHAR(100),
+    age INT,
+    PRIMARY KEY (dog_id));
+   
+     /* Changes items in a table
+    SELECT * FROM dog_shop Where name = "Mike";
+    Update dog-shop SET name = 'Michael' WHERE name = 'Mike';
