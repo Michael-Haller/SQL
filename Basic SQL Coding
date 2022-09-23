@@ -79,7 +79,18 @@
 
 
 /* Creating A table of shirts in your closest. 
-/* Note the following: shirts must need different id's, insert a purple shirt, 
+/* Do the following: 
+    shirts must need different id's, 
+    insert a purple shirt, 
+    grab medium Polo shirts and change to large, 
+    grab the tank top shirt and chnage last day worn to zero,
+    change white shrits to off-white and small to xs
+    delete shirts worn 200 days ago
+    delete all tank tops
+    delete all shirts
+    delete the entire shirts table
+    
+
 SELECT database();
  
 CREATE DATABASE shirts_db;
@@ -116,3 +127,57 @@ INSERT INTO shirts(color, article, shirt_size, last_worn)
 VALUES('purple', 'polo shirt', 'medium', 50);
  
 SELECT * FROM shirts;
+
+SELECT article, color FROM shirts;
+ 
+SELECT * FROM shirts WHERE shirt_size='M';
+ 
+SELECT article, color, shirt_size, last_worn FROM shirts WHERE shirt_size='M';
+SELECT * FROM shirts WHERE article='polo shirt';
+ 
+UPDATE shirts SET shirt_size='L' WHERE article='polo shirt';
+ 
+SELECT * FROM shirts WHERE article='polo shirt';
+ 
+SELECT * FROM shirts;
+ 
+SELECT * FROM shirts WHERE last_worn=15;
+ 
+UPDATE shirts SET last_worn=0 WHERE last_worn=15;
+ 
+SELECT * FROM shirts WHERE last_worn=15;
+ 
+SELECT * FROM shirts WHERE last_worn=0;
+ 
+SELECT * FROM shirts WHERE color='white';
+ 
+UPDATE shirts SET color='off white', shirt_size='XS' WHERE color='white';
+ 
+SELECT * FROM shirts WHERE color='white';
+ 
+SELECT * FROM shirts WHERE color='off white';
+ 
+SELECT * FROM shirts;
+SELECT * FROM shirts;
+ 
+SELECT * FROM shirts WHERE last_worn=200;
+ 
+DELETE FROM shirts WHERE last_worn=200;
+ 
+SELECT * FROM shirts WHERE article='tank top';
+ 
+DELETE FROM shirts WHERE article='tank top';
+ 
+SELECT * FROM shirts WHERE article='tank top';
+ 
+SELECT * FROM shirts;
+ 
+DELETE FROM shirts;
+ 
+SELECT * FROM shirts;
+ 
+DROP TABLE shirts;
+ 
+show tables;
+ 
+DESC shirts;
