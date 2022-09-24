@@ -184,3 +184,5 @@
         
         
         source dog_file.sql
+        
+        CONCAT(column, 'text', anotherColumn, 'more text')
