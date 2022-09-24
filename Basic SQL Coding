@@ -185,41 +185,29 @@
         
         source dog_file.sql
         
+        /* How to combine two columns and add text in between
         CONCAT(column, 'text', anotherColumn, 'more text')
         
+        /* Examples of extrating parts of text from a statement and/or columns
+        /* The 'AS' part is where you name the text
         SELECT SUBSTRING('Hello World', 1, 4);
- 
         SELECT SUBSTRING('Hello World', 7);
- 
         SELECT SUBSTRING('Hello World', 3, 8);
- 
         SELECT SUBSTRING('Hello World', 3);
- 
         SELECT SUBSTRING('Hello World', -3);
- 
         SELECT SUBSTRING('Hello World', -7);
- 
         SELECT title FROM books;
- 
         SELECT SUBSTRING("Where I'm Calling From: Selected Stories", 1, 10);
- 
         SELECT SUBSTRING(title, 1, 10) FROM books;
- 
         SELECT SUBSTRING(title, 1, 10) AS 'short title' FROM books;
- 
         SELECT SUBSTR(title, 1, 10) AS 'short title' FROM books;
- 
         SELECT CONCAT
          (
           SUBSTRING(title, 1, 10),
           '...'
             )
         FROM books;
- 
-        source book_code.sql
- 
-        SELECT CONCAT
-         (
-                SUBSTRING(title, 1, 10),
-                '...'
-             ) AS 'short title'
+        
+        
+        
+        
