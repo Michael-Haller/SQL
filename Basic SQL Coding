@@ -1,4 +1,6 @@
 /* Beginner Code
+/* https://sql-format.com/ is good for formatting
+
     /* Select everything from our order database
     SELECT * FROM orders;
 
@@ -239,9 +241,30 @@
         SELECT REVERSE(author_fname) FROM books;
         SELECT CONCAT('woof', REVERSE('woof'));
         SELECT CONCAT(author_fname, REVERSE(author_fname)) FROM books;
+        
+        /* Examples of CHAR_LENGTH which is finding the length of a statement based on the amount of characters
+        SELECT CHAR_LENGTH('Hello World');
+        SELECT author_lname, CHAR_LENGTH(author_lname) AS 'length' FROM books;
+        SELECT CONCAT(author_lname, ' is ', CHAR_LENGTH(author_lname), ' characters long') FROM books;
+        
+        /* DISTINCT is revealing UNIQUE VALUES and get rid of the duplicates
+        SELECT DISTINCT author_lname FROM books;
+        
+        /* ORDER BY helps sort items and orders them by whatever selection you choose
+        SELECT title, released_year, pages FROM books ORDER BY released_year
 
+        /* LIMIT - Purpose is to show only a select amount from a list, table, etc.
+        SELECT title, released_year FROM books ORDER BY released_year DESC LIMIT 0,5;
 
-
-
-
+        /* LIKE - "Not sure what you need, but know what it should be similar too"
+            /* the wilcard symbol is "%" which putting it infront of the letters indicates it can end with your search option and vice versa if it's on the back end
+            /* Doing LIKE '____' means it's looking for the digit amount that you have underline in the text
+            /* Doing the escape key "\" helps you find items with a"%" or a "_" in your searches
+            SELECT title, author_fname FROM books WHERE author_fname LIKE '%da%'
+            SELECT title, author_fname FROM books WHERE author_fname LIKE 'da%'
+            
+            SELECT title FROM books WHERE title LIKE '%\%%'
+            SELECT title FROM books WHERE title LIKE '%\_%'
+        
+        
 
