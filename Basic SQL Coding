@@ -273,3 +273,7 @@
     /* MIN MAX - returns smallest and largest of any set
     SELECT title, pages FROM books 
     WHERE pages = (SELECT Min(pages) FROM books); 
+    
+    /* AVG - Returns the average
+    SELECT author_fname, author_lname, AVG(pages) FROM book GROUP BY author_lname, author_fname;
+    
