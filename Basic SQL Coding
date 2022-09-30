@@ -271,4 +271,5 @@
     SELECT COUNT(DISTINCT author_lname, author_fname) FROM books
     
     /* MIN MAX - returns smallest and largest of any set
-    
+    SELECT title, pages FROM books 
+    WHERE pages = (SELECT Min(pages) FROM books); 
