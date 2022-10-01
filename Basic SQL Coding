@@ -277,3 +277,41 @@
     /* AVG - Returns the average
     SELECT author_fname, author_lname, AVG(pages) FROM book GROUP BY author_lname, author_fname;
     
+    /* CHAR Vs VARCHAR - Char shows the amount you enter but same storage size no matter what
+    
+    /* DECIMAL (#,#) =(Total Number of Digits, Digits after decimal)
+    /* FLOAT and DOUBLE store larger numbers using less space, but comes at the cost of percision
+    
+    /* DATE = 'YYYY-MM-DD', TIME = 'HH:MM:SS', DATETIME = 'YYYY-MM-DD HH:MM:SS'
+    /* DAYNAME - Returns the day of the week a specific date occured
+    /* MONTHNAME - same as DAYNAME but Month
+    /* TIMESTAMPS - keep less space versus DATETIME but only go from 1970 to 2038
+    
+   
+   
+   /* LOGICAL OPERATORS
+   
+   /* NOT EQUAL = "!="
+   SELECT title FROM books WHERE released_year != 2017;
+   
+   /* NOT LIKE
+   SELECT title FROM books WHERE title NOT LIKE 'W%';
+   
+   /* Greater Than & Less Than Also equal to with each
+   SELECT title, released_year FROM books 
+   WHERE released_year > 2000 ORDER BY released_year;
+ 
+   SELECT title, released_year FROM books 
+   WHERE released_year >= 2000 ORDER BY released_year;
+   
+   SELECT title, released_year FROM books
+   WHERE released_year < 2000;
+ 
+   SELECT title, released_year FROM books
+   WHERE released_year <= 2000;
+   
+   /* AND
+   
+    
+    
+    
