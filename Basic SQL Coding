@@ -341,4 +341,11 @@
     WHERE released_year >= 2000 AND
     released_year % 2 != 0;
     
-    /*
+    /* CASE Statements
+    SELECT title, stock_quantity,
+    CASE 
+        WHEN stock_quantity <= 50 THEN '*'
+        WHEN stock_quantity <= 100 THEN '**'
+        ELSE '***'
+    END AS STOCK
+    FROM books; 
