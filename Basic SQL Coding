@@ -310,8 +310,35 @@
    SELECT title, released_year FROM books
    WHERE released_year <= 2000;
    
-   /* AND
+   /* AND, OR Operators
    
+    SELECT * FROM books
+    WHERE author_lname='Eggers' 
+    AND released_year > 2010 
+    AND title LIKE '%novel%';
     
+    SELECT title, author_lname, released_year, stock_quantity 
+    FROM   books WHERE  author_lname = 'Eggers' OR released_year > 2010  OR     stock_quantity > 100;
     
+    /* BETWEEN and NOT BETWEEN
+    SELECT title, released_year FROM books 
+    WHERE released_year BETWEEN 2004 AND 2015;
+ 
+    SELECT title, released_year FROM books 
+    WHERE released_year NOT BETWEEN 2004 AND 2015;
     
+    /* IN and NOT IN
+    /* MODULO = '%' showing what the remainder is
+    
+    SELECT title, released_year FROM books
+    WHERE released_year IN (2017, 1985);
+    
+    SELECT title, released_year FROM books
+    WHERE released_year NOT IN 
+    (2000,2002,2004,2006,2008,2010,2012,2014,2016);
+    
+    SELECT title, released_year FROM books
+    WHERE released_year >= 2000 AND
+    released_year % 2 != 0;
+    
+    /*
