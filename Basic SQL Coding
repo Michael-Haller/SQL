@@ -420,5 +420,34 @@
     RIGHT JOIN orders
     ON customers.id = orders.customer_id;
     
-    
+                                            /* Example of joining tables based on reviews and series *\
+                                            SELECT
+                                            title,
+                                            AVG(rating) as avg_rating
+                                            FROM series
+                                            JOIN reviews
+                                            ON series.id = reviews.series_id
+                                            GROUP BY series.id
+                                            ORDER BY avg_rating;
+                                            
+                                            SELECT
+                                            first_name,
+                                            last_name,
+                                            rating
+                                            FROM reviews
+                                            INNER JOIN reviewers
+                                            ON reviewers.id = reviews.reviewer_id; 
+                                            
+                                            SELECT 
+                                            title,
+                                            rating,
+                                            CONCAT(first_name,' ', last_name) AS reviewer
+                                            FROM reviewers
+                                            INNER JOIN reviews 
+                                            ON reviewers.id = reviews.reviewer_id
+                                            INNER JOIN series
+                                            ON series.id = reviews.series_id
+                                            ORDER BY title;
+                                            
+                                          
     
