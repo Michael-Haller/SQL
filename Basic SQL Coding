@@ -1,28 +1,28 @@
-/* Beginner Code
-/* https://sql-format.com/ is good for formatting
+-- Beginner Code
+-- https://sql-format.com/ is good for formatting
 
-    /* Select everything from our order database
+    -- Select everything from our order database
     SELECT * FROM orders;
 
-    /*Creating MySQL Database Server for our Dog Store App
+    -- Creating MySQL Database Server for our Dog Store App
     Create Database dog_store_db;
 
-    /* Creating Database
+    -- Creating Database
     CREATE DATABASE dog_store_db;
 
-    /* Show your database
+    -- Show your database
     show databases;
 
-    /*Drop a database
+    -- Drop a database
     DROP DATABASE dog_store_db;
 
-    /* Ways to use Databases
+    -- Ways to use Databases
     USE dog_store_db;
     SELECT database();
 
-/* Creating or Deleting Tables
-  /* Create a table called Dog Shop and have dog name and age
-  /* Make sure to create a database first
+-- Creating or Deleting Tables
+  -- Create a table called Dog Shop and have dog name and age
+  -- Make sure to create a database first
      CREATE DATABASE dog_store 
      CREATE TABLE dog_shop
      (
@@ -33,55 +33,55 @@
      /* Want to see if this worked?
     SHOW TABLES;
     SHOW COLUMNS FROM dog_shop;
-     /* OR
+     -- OR
      DESC dog_shop;
   
-    /* How about deleting
+    -- How about deleting
      DROP TABLE dog_shop
      
-  /* Adding Data to the Table
+  -- Adding Data to the Table
     INSERT INTO dog_shop (name, age) VALUES ('Mike', 9), ('Marley', 1);
     
-    /* Confirming this worked
+    -- Confirming this worked
     Select * FROM dog_shop
     
-    /* Null versus Not Null. Null does not equal zero.
+    -- Null versus Not Null. Null does not equal zero.
     CREATE TABLE dog_shop2 (
     name VARCHAR(100) NOT NULL,
     age INT NOT NULL);
     
-    /*Creating a default value
+    -- Creating a default value
     CREATE TABLE dog_shop3
     (name VARCHAR(100) DEFAULT 'no name provided',
     age INT DEFAULT 99);
     
-    /* Other Option
+    -- Other Option
     CREATE TABLE dog_shop4
     (name VARCHAR(100) NOT NULL DEFAULT 'no name provided',
     age INT NOT NULL DEFAULT 99);
     
-    /* Primary keys how to differentiate when there are two of the same names and ages in a group
+    -- Primary keys how to differentiate when there are two of the same names and ages in a group
     CREATE TABLE unique_dogs
     (dog_id INT NOT NULL,
     name VARCHAR(100),
     age INT,
     PRIMARY KEY (dog_id));
     
-    /* When making it auto increment
+    -- When making it auto increment
      CREATE TABLE unique_dogs2
   (dog_id INT NOT NULL AUTO_INCRMENT,
     name VARCHAR(100),
     age INT,
     PRIMARY KEY (dog_id));
    
-     /* Changes items in a table
+     -- Changes items in a table
     SELECT * FROM dog_shop Where name = "Mike";
     Update dog-shop SET name = 'Michael' WHERE name = 'Mike';
     
 
 
-/* Creating A table of shirts in your closest. 
-/* Do the following: 
+-- Creating A table of shirts in your closest. 
+-- Do the following: 
     shirts must need different id's, 
     insert a purple shirt, 
     grab medium Polo shirts and change to large, 
@@ -187,11 +187,11 @@
         
         source dog_file.sql
         
-        /* How to combine two columns and add text in between
+        -- How to combine two columns and add text in between
         CONCAT(column, 'text', anotherColumn, 'more text')
         
-        /* Examples of extrating parts of text from a statement and/or columns
-        /* The 'AS' part is where you name the text
+        -- Examples of extrating parts of text from a statement and/or columns
+        -- The 'AS' part is where you name the text
         SELECT SUBSTRING('Hello World', 1, 4);
         SELECT SUBSTRING('Hello World', 7);
         SELECT SUBSTRING('Hello World', 3, 8);
@@ -210,7 +210,7 @@
             )
         FROM books;
         
-        /* Examples of REPLACE
+        -- Examples of REPLACE
         SELECT REPLACE('Hello World', 'Hell', '%$#@');
         SELECT REPLACE('Hello World', 'l', '7');
         SELECT REPLACE('Hello World', 'o', '0');
@@ -235,31 +235,31 @@
            SUBSTRING(REPLACE(title, 'e', '3'), 1, 10) AS 'weird string'
         FROM books;
         
-        /* Examples of Reversing the text
+        -- Examples of Reversing the text
         SELECT REVERSE('Hello World');
         SELECT REVERSE('meow meow');
         SELECT REVERSE(author_fname) FROM books;
         SELECT CONCAT('woof', REVERSE('woof'));
         SELECT CONCAT(author_fname, REVERSE(author_fname)) FROM books;
         
-        /* Examples of CHAR_LENGTH which is finding the length of a statement based on the amount of characters
+        -- Examples of CHAR_LENGTH which is finding the length of a statement based on the amount of characters
         SELECT CHAR_LENGTH('Hello World');
         SELECT author_lname, CHAR_LENGTH(author_lname) AS 'length' FROM books;
         SELECT CONCAT(author_lname, ' is ', CHAR_LENGTH(author_lname), ' characters long') FROM books;
         
-        /* DISTINCT is revealing UNIQUE VALUES and get rid of the duplicates
+       -- DISTINCT is revealing UNIQUE VALUES and get rid of the duplicates
         SELECT DISTINCT author_lname FROM books;
         
-        /* ORDER BY helps sort items and orders them by whatever selection you choose
+        -- ORDER BY helps sort items and orders them by whatever selection you choose
         SELECT title, released_year, pages FROM books ORDER BY released_year
 
-        /* LIMIT - Purpose is to show only a select amount from a list, table, etc.
+        -- LIMIT - Purpose is to show only a select amount from a list, table, etc.
         SELECT title, released_year FROM books ORDER BY released_year DESC LIMIT 0,5;
 
-        /* LIKE - "Not sure what you need, but know what it should be similar too"
-            /* the wilcard symbol is "%" which putting it infront of the letters indicates it can end with your search option and vice versa if it's on the back end
-            /* Doing LIKE '____' means it's looking for the digit amount that you have underline in the text
-            /* Doing the escape key "\" helps you find items with a"%" or a "_" in your searches
+        -- LIKE - "Not sure what you need, but know what it should be similar too"
+            -- the wilcard symbol is "%" which putting it infront of the letters indicates it can end with your search option and vice versa if it's on the back end
+            -- Doing LIKE '____' means it's looking for the digit amount that you have underline in the text
+            -- Doing the escape key "\" helps you find items with a"%" or a "_" in your searches
             SELECT title, author_fname FROM books WHERE author_fname LIKE '%da%'
             SELECT title, author_fname FROM books WHERE author_fname LIKE 'da%'
             
@@ -267,37 +267,37 @@
             SELECT title FROM books WHERE title LIKE '%\_%'
         
         
-    /*  COUNT - This can help tell you how many items are in a dataset
+    --  COUNT - This can help tell you how many items are in a dataset
     SELECT COUNT(DISTINCT author_lname, author_fname) FROM books
     
-    /* MIN MAX - returns smallest and largest of any set
+    -- MIN MAX - returns smallest and largest of any set
     SELECT title, pages FROM books 
     WHERE pages = (SELECT Min(pages) FROM books); 
     
-    /* AVG - Returns the average
+    -- AVG - Returns the average
     SELECT author_fname, author_lname, AVG(pages) FROM book GROUP BY author_lname, author_fname;
     
-    /* CHAR Vs VARCHAR - Char shows the amount you enter but same storage size no matter what
+    -- CHAR Vs VARCHAR - Char shows the amount you enter but same storage size no matter what
     
-    /* DECIMAL (#,#) =(Total Number of Digits, Digits after decimal)
-    /* FLOAT and DOUBLE store larger numbers using less space, but comes at the cost of percision
+    -- DECIMAL (#,#) =(Total Number of Digits, Digits after decimal)
+    -- FLOAT and DOUBLE store larger numbers using less space, but comes at the cost of percision
     
-    /* DATE = 'YYYY-MM-DD', TIME = 'HH:MM:SS', DATETIME = 'YYYY-MM-DD HH:MM:SS'
-    /* DAYNAME - Returns the day of the week a specific date occured
-    /* MONTHNAME - same as DAYNAME but Month
-    /* TIMESTAMPS - keep less space versus DATETIME but only go from 1970 to 2038
+    -- DATE = 'YYYY-MM-DD', TIME = 'HH:MM:SS', DATETIME = 'YYYY-MM-DD HH:MM:SS'
+    -- DAYNAME - Returns the day of the week a specific date occured
+    -- MONTHNAME - same as DAYNAME but Month
+    -- TIMESTAMPS - keep less space versus DATETIME but only go from 1970 to 2038
     
    
    
-   /* LOGICAL OPERATORS
+   -- LOGICAL OPERATORS
    
-   /* NOT EQUAL = "!="
+   -- NOT EQUAL = "!="
    SELECT title FROM books WHERE released_year != 2017;
    
-   /* NOT LIKE
+   -- NOT LIKE
    SELECT title FROM books WHERE title NOT LIKE 'W%';
    
-   /* Greater Than & Less Than Also equal to with each
+   -- Greater Than & Less Than Also equal to with each
    SELECT title, released_year FROM books 
    WHERE released_year > 2000 ORDER BY released_year;
  
@@ -310,7 +310,7 @@
    SELECT title, released_year FROM books
    WHERE released_year <= 2000;
    
-   /* AND, OR Operators
+   -- AND, OR Operators
    
     SELECT * FROM books
     WHERE author_lname='Eggers' 
@@ -320,15 +320,15 @@
     SELECT title, author_lname, released_year, stock_quantity 
     FROM   books WHERE  author_lname = 'Eggers' OR released_year > 2010  OR     stock_quantity > 100;
     
-    /* BETWEEN and NOT BETWEEN
+    -- BETWEEN and NOT BETWEEN
     SELECT title, released_year FROM books 
     WHERE released_year BETWEEN 2004 AND 2015;
  
     SELECT title, released_year FROM books 
     WHERE released_year NOT BETWEEN 2004 AND 2015;
     
-    /* IN and NOT IN
-    /* MODULO = '%' showing what the remainder is
+    -- IN and NOT IN
+    -- MODULO = '%' showing what the remainder is
     
     SELECT title, released_year FROM books
     WHERE released_year IN (2017, 1985);
@@ -341,7 +341,7 @@
     WHERE released_year >= 2000 AND
     released_year % 2 != 0;
     
-    /* CASE Statements
+    -- CASE Statements
     SELECT title, stock_quantity,
     CASE 
         WHEN stock_quantity <= 50 THEN '*'
@@ -350,9 +350,9 @@
     END AS STOCK
     FROM books;
     
-    /* FOREIGN KEY (fk) - A way to access the primary key of another table and can link two data tables together
+    -- FOREIGN KEY (fk) - A way to access the primary key of another table and can link two data tables together
     -- Creating the customers and orders tables
-    /* Note the last part of this code would fail due to fact there is no ID 98
+    -- Note the last part of this code would fail due to fact there is no ID 98
     
     CREATE TABLE customers(
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -386,15 +386,15 @@
     INSERT INTO orders (order_date, amount, customer_id)
     VALUES ('2016/06/06', 33.67, 98);
     
-    /* Cross Joining *\
+    -- Cross Joining 
     
-    /* Inner Joining *\
+    -- Inner Joining 
     
     SELECT * FROM customers
     JOIN orders
     ON customers.id = orders.customer_id;
     
-    /* Left Joining *\
+    -- Left Joining
     
     SELECT * FROM customers
     LEFT JOIN orders
@@ -415,12 +415,12 @@
     GROUP BY customers.id
     ORDER BY total_spent;
     
-    /* Right Joining *\
+    -- Right Joining 
     SELECT * FROM customers
     RIGHT JOIN orders
     ON customers.id = orders.customer_id;
     
-                                            /* Example of joining tables based on reviews and series *\
+                                            -- Example of joining tables based on reviews and series 
                                             SELECT
                                             title,
                                             AVG(rating) as avg_rating
