@@ -159,4 +159,62 @@ FROM first_pv_per_session
     ON first_pv_per_session.first_pv = website_pageviews.website_pageview_id
     
 GROUP BY wesbite_pageviews.pageview_url
+
+--Task 3: show three numbers, sessions, bounced sessions, and % of sessions which bounced
+
+CRETE TEMPORARY TABLE first_pageviews
+Select 
+  website_session_id
+  MIN(website_pageview_id) AS min_pageview_id
+
+FROM website_pageviews
+
+WHERE created_at < '2012-06-14'
+GROUP BY
+  website_session_id;
   
+-- bring in landing page, but restirct to home only
+
+  CREATE TEMPORARY TABLE sessions_w_home_landing_page
+  Select
+    first_pageviews.website_session_id,
+    website_pageviews.pageview_url AS landing_page
+  FROM first_pageviews
+    LEFT JOIN website_pageviews
+      ON website_pageviews.website_pageview_id = first_pageviews.min_pageview_id
+ WHERE website_pageviews.pageview_url = '/home';
+ 
+ -- Now table with count of pageviews per session
+ 
+  CREATE TEMPORARY TABLE bounced_sessions
+  
+  SELECT
+    sessions_w_home_landing_page.website_session_id,
+    sessions_w_home_landing_page.landing_page,
+    COUNT(website_pageviews.website_pageview_id) AS count_of_pages_viewed
+    
+    FROM sessions_w_home_landing_page
+    LEFT JOIN website_pageviews
+      ON website_pageviews.website_session_id = sessions_w_home_landing_page.website_session_id
+      
+      GROUP BY 
+        sessions_w_home_landing_page.website_session_id,
+        sessions_w_home_landing_page.landing_page
+        
+       HAVING
+       COUNT(website_pageviews.website_pageview_id) = 1;
+       
+ -- Calculate Bounce Rates
+ Select
+  COUNT(DISTINCT sessions_w_home_landing_page.website_session_id) AS total_sessions,
+  COUNT(DISTINCT bounced.website_session_id) AS bounced_sessions,
+  COUNT(DISTINCT bounced.website_session_id)/ COUNT(DISTINCT sessions_w_home_landing_page.website_session_id) AS bounce_rate
+  
+ From sessions_w_home_landing_page
+  LEFT JOIN bounced_sessions
+    ON sessions_w_home_landing_page.website_session_id = bounced_sessions.website_sessions_id
+    
+    ORDER BY
+    sessions_w_home_landing_page.website_session_id
+    
+--TASK 3: 
