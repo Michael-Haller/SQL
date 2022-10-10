@@ -565,6 +565,209 @@ WHERE website_sessions.created_at < '2012-11-27'
   AND website_sessions.utm_source  'gsearch'
  GROUP BY 1,2;
  
-  --
+  -- Separate Monthly trend of gsearch but splitting out nonbrand and brand campaigns
+ 
+
+  Select 
+    YEAR(website_sessions.created_at) AS yr,
+    MONTH(website_sessions.created_at) AS mo,
+    COUNT(DISTINCT CASE WHEN utm_campaign = 'nonbrand' THEN website_sessions.website_session_id ELSE NULL END) AS nonbrand_sessions,
+    COUNT(DISTINCT CASE WHEN utm_campaign = 'nonbrand' THEN orders.order_id ELSE NULL END) AS nonbrand_orders,
+    COUNT(DISTINCT CASE WHEN utm_campaign = 'brand' THEN website_sessions.website_session_id ELSE NULL END) AS brand_sessions,
+    COUNT(DISTINCT CASE WHEN utm_campaign = 'brand' THEN orders.order_id ELSE NULL END) AS brand_orders
+   FROM website_sessions
+    LEFT JOIN orders
+      ON  orders.website_session_id = website_Sessions.website_session_id
+  WHERE website_sessions.created_at < '2012-11-27'
+      AND website_sessions.utm_source = 'gsearch'
+  GROUP BY 1,2;
   
+  --While on gsearch, dive into nonbrand and pull monthly sessions and order split by type
   
+   Select 
+    YEAR(website_sessions.created_at) AS yr,
+    MONTH(website_sessions.created_at) AS mo,
+    COUNT(DISTINCT CASE WHEN utm_campaign = 'desktop' THEN website_sessions.website_session_id ELSE NULL END) AS desktop_sessions,
+    COUNT(DISTINCT CASE WHEN utm_campaign = 'desktop' THEN orders.order_id ELSE NULL END) AS desktop_orders,
+    COUNT(DISTINCT CASE WHEN utm_campaign = 'mobile' THEN website_sessions.website_session_id ELSE NULL END) AS mobile_sessions,
+    COUNT(DISTINCT CASE WHEN utm_campaign = 'mobile' THEN orders.order_id ELSE NULL END) AS mobile_orders
+    
+   FROM website_sessions
+    LEFT JOIN orders
+      ON  orders.website_session_id = website_sessions.website_session_id
+  WHERE website_sessions.created_at < '2012-11-27'
+      AND website_sessions.utm_source = 'gsearch'
+      AND website_sessions.utm_source = 'nonbrand'
+  GROUP BY 1,2;
+  
+  -- Pull monthly trends for gsearch along with with trends for each of other channels
+  
+  SELECT DISTINCT
+    utm_source,
+    utm_campaign,
+    http_referer
+  FROM website_sessions
+  Where website_sessions.created_at < '2012-11-27';
+    
+   Select 
+    YEAR(website_sessions.created_at) AS yr,
+    MONTH(website_sessions.created_at) AS mo,
+    COUNT(DISTINCT CASE WHEN utm_campaign = 'gsearch' THEN website_sessions.website_session_id ELSE NULL END) AS gsearch_paid_sessions,
+    COUNT(DISTINCT CASE WHEN utm_campaign = 'bsearch' THEN website_sessions.website_session_id ELSE NULL END) AS bsearch_paid_sessions,
+    COUNT(DISTINCT CASE WHEN utm_source IS NULL AND http_referer IS NOT NULL THEN website_sessions.website_session_id ELSE NULL END) AS organic_search_sessions,
+    COUNT(DISTINCT CASE WHEN utm_source IS NULL AND http_referer IS NULL THEN website_sessions.website_session_id ELSE NULL END) AS direct_type_in_sessions
+    
+   FROM website_sessions
+    LEFT JOIN orders
+      ON orders.website_session_id = website_sessions.website_session_id
+      
+   WHERE website_sessions.created_at < '2012-11-27'
+   GROUP BY 1,2;
+   
+   -- Could you pull session to order converison rates, by month
+   
+   Select 
+    YEAR(website_sessions.created_at) AS yr,
+    MONTH(website_sessions.created_at) AS mo,
+    COUNT(DISTINCT website_sessions.website_session_id) AS sessions,
+    COUNT(DISTINCT orders.order_id) AS orders,
+    COUNT(DISTINCT orders.order_id)/COUNT(DISTINCT website_sessions.website_session_id) AS conversation_rate
+        
+   FROM website_sessions
+    LEFT JOIN orders
+      ON orders.website_session_id = website_sessions.website_session_id
+      
+   WHERE website_sessions.created_at < '2012-11-27'
+   GROUP BY 1,2;
+   
+   -- For gsearch lander test, please est. revenue that test earned us
+   
+   SELECT 
+    MIN(website_pageview_id) AS first_test_pv
+   FROM website_pageviews
+   WHERE pageview_url = '/lander-1'
+   
+  CREATE TEMPORARY TABLE first_test_pageviews
+  
+   SELECT 
+    website_pageviews.website_session_id,   
+    MIN(website_pageview_id) AS min_pageview_id
+   FROM website_pageviews
+    INNER JOIN 
+      ON website_sessions.website_session_id = website_pageviews.website_session_id
+        AND website_sessions.created_at < '2012-07-28'
+        AND website_sessions.created_at > '2012-06-19 00:35:54'
+        AND website_sessions.utm_source = 'gsearch'
+        AND website_sessions.utm_source = 'nonbrand'
+        
+     GROUP BY 
+        website_pageviews.website_session_id;
+        
+        --Now, bring in next landing page to each session, but restrict to home or lander-1
+        
+        CREATE TEMPORARY TABLE nonbrand_test_sessions_w_landing_pages
+        Select
+         first_test_pageviews.website_session_id,
+          website_pageviews.pageview_url AS landing_page
+          
+        FROM first_test_pageviews
+         LEFT JOIN website_pageviews
+           ON website_pageviews.website_pageview_id = first_test_pageviews.min_pageview_id
+          
+          WHERE website_pageviews.pageview_url IN ('/home', '/lander-1);
+          
+        -- make a table to bring in orders
+        CREATE TEMPORARY TABLE nonbrand_test_sessions_w_landing_pages
+        Select
+         nonbrand_test_sessions_w_landing_pages.website_session_id,
+         nonbrand_test_sessions_w_landing_pages.landing_page,
+         orders.order_id AS order_id 
+          
+        FROM nonbrand_test_sessions_w_landing_pages
+         LEFT JOIN orders
+           ON orders.website_session_id = nonbrand_test_sessions_w_landing_pages.website_session_id;
+           
+         -- Find diff between conv rates
+       SELECT
+         landing_page
+         COUNT(DISTINCT website_session_id) AS sessions,
+         COUNT(DISTINCT order_id) AS orders,
+         COUNT(DISTINCT order_id)/ COUNT(DISTINCT website_session_id) AS conv_rate
+       FROM nonbrand_test_sessions_w_orders
+       GROUP BY 1;
+       
+       
+       --Find most recent pageview for gsearch nonbrand where traffic was sent to /home
+  Select 
+    MAX(website_sessions.website_session_id) AS most_recent_gsearch_nonbrand_home_pageview
+ 
+FROM website_sessions
+  LEFT JOIN website_pageviews
+    ON website_sessions.website_session_id = website_pageviews.website_session_id
+  
+  WHERE website_sessions.utm_source = 'gsearch'
+    AND utm_campaign = 'nonbrand' 
+    AND pageview_url = '/home'
+    AND website_sessions.created_at < '2012-11-27'
+       
+       -- MAX = 17145
+   Select 
+   COUNT(website_session_id) AS sessions_since_test
+ 
+FROM website_sessions
+ 
+  WHERE website_sessions.created_at < '2012-11-27'
+    AND utm_campaign = 'nonbrand' 
+    AND website_session_id > 17145
+    AND utm_source = 'gsearch'
+    
+    -- Show a full conv funnel from each of the two pages to order (from last problem)
+       
+ CREATE TEMPORARY TABLE session_level_made_it_flagged     
+ SELECT 
+ website_session_id,
+ MAX(homepage) As saw_homepage,
+ MAX(custom_lander) As saw_custom_lander,
+ MAX(products_page) As product_made_it,
+ MAX(mrfuzzy_page) As mrfuzzy_made_it,
+ MAX(cart_page) As cart_made_it,
+ MAX(shipping_page) As shipping_made_it,
+ MAX(billing_page) As billing_made_it,
+ MAX(thankyou_page) As thankyou_made_it
+ 
+ FROM( Select 
+
+    website_sessions.website_session_id,
+    website_pageviews.pageview_url,
+    --website_pageviews.created_at AS pageviews_created_at
+    CASE WHEN pageview_url = '/home' THEN 1 ELSE 0 END AS homepage,
+    CASE WHEN pageview_url = '/lander-1' THEN 1 ELSE 0 END AS custom_lander,
+    CASE WHEN pageview_url = '/products' THEN 1 ELSE 0 END AS products_page,
+    CASE WHEN pageview_url = '/the-original-mr-fuzzy' THEN 1 ELSE 0 END AS mrfuzzy_page,
+    CASE WHEN pageview_url = '/cart' THEN 1 ELSE 0 END AS cart_page,
+    CASE WHEN pageview_url = '/shipping' THEN 1 ELSE 0 END AS shipping_page,
+    CASE WHEN pageview_url = '/billing' THEN 1 ELSE 0 END AS billing_page,
+    CASE WHEN pageview_url = '/thank-you-for-your-order' THEN 1 ELSE 0 END AS thankyou_page,
+
+
+FROM website_sessions
+  LEFT JOIN website_pageviews
+    ON website_sessions.website_session_id = website_pageviews.website_session_id
+  
+  WHERE website_sessions.utm_source = 'gsearch'
+    AND website_sessions.utm_campaign = 'nonbrand' 
+    AND website_sessions.created_at > '2012-06-19'
+    AND website_sessions.created_at < '2012-07-28'
+    
+  ORDER BY
+    website_sessions.website_session_id,
+    website_pageviews.created_at
+    ) AS pageview_level
+    
+    GROUP BY
+    website_session_id;
+        
+         
+   -NEW SECTION     
+         
+         
